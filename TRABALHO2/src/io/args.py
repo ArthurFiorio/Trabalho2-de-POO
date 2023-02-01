@@ -19,3 +19,4 @@ def parse_args() -> Any:
 
     # Exemplo. Utilizar o argparse na versao final
     return DummyArgs()
+    
