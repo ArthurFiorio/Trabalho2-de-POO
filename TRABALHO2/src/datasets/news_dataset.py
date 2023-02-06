@@ -18,8 +18,20 @@ class NewsDataset(DatasetInterface):
 
     def get(self, idx: int) -> Tuple[Any, str]:
         self.superlista=[]
-        for i in range(len(self.text_classes)):
 
+        for i in range(len(self.text_classes)):
+            if 'test.txt' in self.path:
+                self.path= self.path.replace('test.txt', self.text_classes[i][0])
+            else:
+                self.path= self.path.replace('train.txt', self.text_classes[i][0])
+            with open(self.path) as file:
+                noticia = file.readline().split()
+                if noticia[i] in self.superlista:
+                    pass
+                else:
+                    self.superlista.append(noticia[i])
+            
+#tirar stopwords do self.superlista e retornar uma lista gigante com todas as palabras com os indicies de repetição
         # fazer aquela parada de escrever todas as palavras nessa superlista, somente caso essa palavra nao esteja
         # previamente nessa lista, remover todas as palavras da stopwords e contar a frenquencia delas
         # to do: de forma parecida com o dataset de imagens, temos que retornar uma lista que contem
