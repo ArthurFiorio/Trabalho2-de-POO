@@ -1,4 +1,3 @@
-
 from typing import Tuple, Any, Dict
 from .dataset_interface import DatasetInterface
 import cv2
@@ -10,8 +9,8 @@ class ImageDataset(DatasetInterface):
         self.path = path
         with open(path, "r") as file:
             for line in file:
-                line = line.split(" ")
-                self.image_classes.append(line)
+                line = line.split(" ") #line = [test/000.png, 4]
+                self.image_classes.append(line) #self.image_classes[0]= [test/000.png, 4]
 
     def size(self) -> int:
         return len(self.image_classes)

@@ -26,7 +26,7 @@ def main():
     experiment = Experiment(train_dataset, test_dataset)
     metrics = experiment.run(classifier)
 
-    report_path= 'TRABALHO2\report.txt'
+    report_path= 'TRABALHO2/report.txt'
 
     # escreve o arquivo de saida
     write_report(report_path, config, metrics)

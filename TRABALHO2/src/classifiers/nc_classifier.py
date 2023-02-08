@@ -1,4 +1,3 @@
-
 from typing import Dict, List
 from .classifier_interface import ClassifierInterface
 from src.datasets.dataset_interface import DatasetInterface
@@ -23,20 +22,26 @@ class NearestCentroidClassifier(ClassifierInterface):
 
 
         for idx in range(self.ContadorAmostras):
-            Vetorizado = DadosTreino[0]
-            Classe =  DadosTreino[1]
+            Vetorizado = DadosTreino[idx][0]
+            Classe = DadosTreino[idx][1]
             if Classe not in Classes:
                 Classes.append(Classe)
                 SomaDasClasses.append(Vetorizado)
                 ContadorDeClasses.append(1)
             else:
-                SomaDasClasses[Classes.index(Classe)] =  list(map(add, SomaDasClasses[Classes.index(Classe)], Vetorizado))
-                ContadorDeClasses[Classes.index(Classe)] += 1
+                index = Classes.index(Classe)
+                if index < len(SomaDasClasses):
+                    SomaDasClasses[index] = list(map(add, SomaDasClasses[index], Vetorizado))
+                    ContadorDeClasses[index] += 1
+                else:
+                    SomaDasClasses.append(Vetorizado)
+                    ContadorDeClasses.append(1)
+
 
         Centroides = []
 
         for i in range(len(Classes)):
-            Centroides.append(([item / ContadorDeClasses[i] for item in SomaDasClasses[i]], Classe[i]))
+            Centroides.append(([item / ContadorDeClasses[i] for item in SomaDasClasses[i]], Classes[i]))
 
         self.Centroides = Centroides
         self.SomaDasClasses = SomaDasClasses
@@ -45,12 +50,12 @@ class NearestCentroidClassifier(ClassifierInterface):
     def predict(self, test_dataset: DatasetInterface) -> List[str]:
         """ para cada amostra no dataset, buscar o centroide mais proximo e respectiva retornar a classe """
 
-        QuantidadeTestes = test_dataset.size
+        QuantidadeTestes = test_dataset.size()
         QuantidadeCentroides = len(self.Centroides)
 
         AmostrasTeste= []
         
-        for idx in range(len(QuantidadeTestes)):
+        for idx in range(QuantidadeTestes):
             AmostrasTeste.append(test_dataset.get(idx))
 
         Distancias = []
@@ -60,7 +65,7 @@ class NearestCentroidClassifier(ClassifierInterface):
                 Soma = 0
                 for k in range(len(AmostrasTeste[0][0])):
                     Soma += (AmostrasTeste[idx][0][k] - self.Centroides[r][0][k]) ** 2
-                DistanciasTemporarias.append(Soma ** 0,5)
+                DistanciasTemporarias.append(Soma ** 0.5)
             Distancias.append(DistanciasTemporarias)
             DistanciasTemporarias = []
 

@@ -11,8 +11,7 @@ class Experiment:
                  test_dataset: DatasetInterface):
         self.train_dataset = train_dataset
         self.test_dataset = test_dataset
-        self.true_classes = self._get_true_classes_from_dataset(
-            self.test_dataset)
+        self.true_classes = self._get_true_classes_from_dataset(self.test_dataset)
 
     def run(self, classifier: ClassifierInterface) -> Dict[str, float]:
         """ executa o experimento """
@@ -37,9 +36,11 @@ class Experiment:
         return metrics
 
 
-    def _get_true_classes_from_dataset(self, dataset: DatasetInterface) -> List[str]:
+    def _get_true_classes_from_dataset(self, dataset: DatasetInterface):
         true_classes = []
         for idx in range(dataset.size()):
-            _, sample_class = dataset.get(idx)
-            true_classes.append(sample_class)
+            sample, sample_class = dataset.get(idx)
+            if isinstance(sample_class, tuple):
+                sample_class = sample_class[0]
+                true_classes.append(sample_class)
         return true_classes
