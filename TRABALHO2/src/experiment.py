@@ -19,13 +19,19 @@ class Experiment:
         classifier.train(self.train_dataset)
         pred_classes = classifier.predict(self.test_dataset)
 
-        #to do: calculo de tempo
-        #usar a biblioteca 'time' 
-        #o tempo de treinamento por amostra (tempo total de treino / número de amostras no treino)
-        #o tempo de predição por amostra (tempo total de predição / número de amostras de teste)
+        Inicio_Cronometro = time.time()
+        classifier.train(self.train_dataset)
+        Fim_Cronometro = time.time()
+        pred_classes = classifier.predict(self.test_dataset)
+
+        Tempo_Inferencia = time.time() - Fim_Cronometro
+        Tempo_Treino = Fim_Cronometro - Inicio_Cronometro
+
 
         metrics = {
-            "accuracy": accuracy(self.true_classes, pred_classes)
+            "accuracy": accuracy(self.true_classes, pred_classes),
+            "training time per sample": Tempo_Treino / self.train_dataset.size,
+            "inference time per sample": Tempo_Inferencia / self.test_dataset.size
         }
 
         return metrics
