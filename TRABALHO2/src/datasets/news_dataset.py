@@ -1,7 +1,7 @@
 
 from typing import Tuple, Any, Dict
 from .dataset_interface import DatasetInterface
-from stopwords import Stop_words
+from .stopwords import Stop_words
 
 class NewsDataset(DatasetInterface):
     def __init__(self, path: str) -> None:
