@@ -16,7 +16,7 @@ class ImageDataset(DatasetInterface):
     def size(self) -> int:
         return len(self.image_classes)
 
-    def get(self, idx: int) -> Tuple[Any, str]: #vetorizar imagem e dps vc se vira boco
+    def get(self, idx: int) -> Tuple[Any, str]:
         for i in range (len(self.image_classes)):
             if 'test.txt' in self.path:
                 self.path= self.path.replace('test.txt', self.image_classes[i][0])
