@@ -20,6 +20,9 @@ def main():
 
     #cria os datasets de acordo com o que foi passado no arquivo json
     train_dataset = create_dataset(config["train_path"], config["type"])
+    train_dataset.get(3)
+
+
     test_dataset = create_dataset(config["test_path"], config["type"])
     classifier = create_classifier(config["classifier"])
 
