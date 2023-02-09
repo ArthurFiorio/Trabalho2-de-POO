@@ -29,18 +29,16 @@ class Experiment:
 
         metrics = {
             "accuracy": accuracy(self.true_classes, pred_classes),
-            "training time per sample": Tempo_Treino / self.train_dataset.size,
-            "inference time per sample": Tempo_Inferencia / self.test_dataset.size
+            "training time per sample": Tempo_Treino / self.train_dataset.size(),
+            "inference time per sample": Tempo_Inferencia / self.test_dataset.size()
         }
 
         return metrics
 
 
-    def _get_true_classes_from_dataset(self, dataset: DatasetInterface):
-        true_classes = []
+    def _get_true_classes_from_dataset(self, dataset: DatasetInterface) -> List[str]:
+        trueclasses = []
         for idx in range(dataset.size()):
-            sample, sample_class = dataset.get(idx)
-            if isinstance(sample_class, tuple):
-                sample_class = sample_class[0]
-                true_classes.append(sample_class)
-        return true_classes
+            _, sample_class = dataset.get(idx)
+            trueclasses.append(sample_class)
+        return trueclasses

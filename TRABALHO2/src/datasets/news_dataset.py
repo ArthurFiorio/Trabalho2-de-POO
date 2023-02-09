@@ -38,4 +38,5 @@ class NewsDataset(DatasetInterface):
                                 self.contagem_palavra[word] = 1
                         else:
                             self.superlista.append(word)
+    
         return self.contagem_palavra, self.news_classes[idx]

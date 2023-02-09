@@ -23,20 +23,14 @@ class NearestCentroidClassifier(ClassifierInterface):
 
         for idx in range(self.ContadorAmostras):
             Vetorizado = DadosTreino[idx][0]
-            Classe = DadosTreino[idx][1]
+            Classe =  DadosTreino[idx][1]
             if Classe not in Classes:
                 Classes.append(Classe)
                 SomaDasClasses.append(Vetorizado)
                 ContadorDeClasses.append(1)
             else:
-                index = Classes.index(Classe)
-                if index < len(SomaDasClasses):
-                    SomaDasClasses[index] = list(map(add, SomaDasClasses[index], Vetorizado))
-                    ContadorDeClasses[index] += 1
-                else:
-                    SomaDasClasses.append(Vetorizado)
-                    ContadorDeClasses.append(1)
-
+                SomaDasClasses[Classes.index(Classe)] =  list(map(add, SomaDasClasses[Classes.index(Classe)], Vetorizado))
+                ContadorDeClasses[Classes.index(Classe)] += 1
 
         Centroides = []
 
